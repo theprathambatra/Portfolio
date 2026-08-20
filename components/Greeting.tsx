@@ -6,7 +6,7 @@ import greeting from "@/public/assets/greetings.json";
 import styles from "./Greeting.module.css";
 export function Greeting() {
   const [shown, setShown] = useState(false);
-  const [reduced, setReduced] = useState(true);
+  const [reduced, setReduced] = useState<boolean | null>(null);
 
   useEffect(() => {
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -18,7 +18,7 @@ export function Greeting() {
     const safety = window.setTimeout(() => {
       sessionStorage.setItem("greeting-seen", "1");
       setShown(true);
-    }, reduce ? 500 : 12_000);
+    }, reduce ? 500 : 8_500);
     return () => window.clearTimeout(safety);
   }, []);
 
@@ -29,9 +29,11 @@ export function Greeting() {
 
   if (shown) return null;
   return <div className={styles.loader} role="status" aria-label="Hello, Hola, Namaste">
-    {reduced
+    {reduced === true
       ? <Image src="/assets/greetings.svg" width={600} height={600} alt="" onLoad={() => window.setTimeout(complete, 350)} />
-      : <Lottie animationData={greeting} loop={false} onComplete={complete} />}
+      : reduced === false
+        ? <Lottie animationData={greeting} loop={false} onComplete={complete} />
+        : null}
     <div><span>Hello</span><span>Hola</span><span>Namaste</span></div>
   </div>;
 }

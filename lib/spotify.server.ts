@@ -14,15 +14,20 @@ async function accessToken() {
   return (await response.json() as { access_token?: string }).access_token ?? null;
 }
 
-export async function spotifyPage(cursor: string | null, limit: number): Promise<MusicPage | null> {
+export async function spotifyPage(cursor: string | null, limit: number, query = ""): Promise<MusicPage | null> {
   const token = await accessToken();
   if (!token) return null;
   const pageLimit = Math.min(50, Math.max(1, limit));
   const endpoint = cursor ? new URL(cursor) : new URL(`https://api.spotify.com/v1/me/tracks?limit=${pageLimit}`);
-  if (endpoint.origin !== "https://api.spotify.com") return null;
+  if (endpoint.origin !== "https://api.spotify.com" || endpoint.pathname !== "/v1/me/tracks") return null;
   const response = await fetch(endpoint, { headers: { Authorization: `Bearer ${token}` }, next: { revalidate: 300 } });
   if (!response.ok) return null;
   const data = await response.json() as SpotifyResponse;
-  const items: MusicRecord[] = (data.items ?? []).flatMap(({ track }) => track ? [{ id: track.id, title: track.name, artist: track.artists.map((artist) => artist.name).join(", "), kind: "track" as const, spotifyUrl: track.external_urls.spotify, embedUrl: `https://open.spotify.com/embed/track/${track.id}`, chapter: "Saved tracks" }] : []);
-  return { items, nextCursor: data.next ?? null, source: "spotify", status: "Authorized Spotify catalog" };
+  const records: MusicRecord[] = (data.items ?? []).flatMap(({ track }) => track ? [{ id: track.id, title: track.name, artist: track.artists.map((artist) => artist.name).join(", "), kind: "track" as const, spotifyUrl: track.external_urls.spotify, embedUrl: `https://open.spotify.com/embed/track/${track.id}`, chapter: "Saved tracks" }] : []);
+  const normalizedQuery = query.trim().toLowerCase();
+  const items = normalizedQuery
+    ? records.filter((record) => `${record.title} ${record.artist} ${record.chapter}`.toLowerCase().includes(normalizedQuery))
+    : records;
+  const status = normalizedQuery ? "Authorized Spotify catalog. Search is applied to the current page." : "Authorized Spotify catalog";
+  return { items, nextCursor: data.next ?? null, source: "spotify", status };
 }

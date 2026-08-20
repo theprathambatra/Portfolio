@@ -7,9 +7,10 @@ export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const limit = Number(searchParams.get("limit")) || 40;
   const cursor = searchParams.get("cursor");
-  const live = await spotifyPage(cursor, limit);
+  const query = searchParams.get("q") ?? "";
+  const live = await spotifyPage(cursor, limit, query);
   if (live) return NextResponse.json(live, { headers: { "Cache-Control": "private, max-age=300" } });
-  const query = (searchParams.get("q") ?? "").toLowerCase();
-  const items = query ? curatedMusic.filter((item) => `${item.title} ${item.artist} ${item.chapter}`.toLowerCase().includes(query)) : curatedMusic;
+  const normalizedQuery = query.toLowerCase();
+  const items = normalizedQuery ? curatedMusic.filter((item) => `${item.title} ${item.artist} ${item.chapter}`.toLowerCase().includes(normalizedQuery)) : curatedMusic;
   return NextResponse.json(pageRecords(items, cursor, limit));
 }

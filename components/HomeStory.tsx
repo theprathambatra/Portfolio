@@ -6,6 +6,18 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import profile from "@/content/profile.json";
 import styles from "./HomeStory.module.css";
 
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function educationPeriod(start: string, end: string) {
+  if (/^\d{4}$/.test(start) && /^\d{4}$/.test(end)) return `${start} to ${end}`;
+  const label = (value: string) => {
+    const [year, month] = value.split("-");
+    const monthIndex = Number(month) - 1;
+    return monthNames[monthIndex] ? `${monthNames[monthIndex]} ${year}` : year;
+  };
+  return `${label(start)} to ${label(end)}`;
+}
+
 function Footballer() {
   return <svg className={styles.playerSvg} viewBox="0 0 420 430" role="img" aria-label="A young left winger juggling a football while checking his phone">
     <defs>
@@ -46,23 +58,65 @@ export function HomeStory() {
     if (reduceMotion) return;
 
     const context = gsap.context(() => {
-      const player = select("[data-player]")[0];
+      const player = select("[data-player]")[0] as HTMLElement;
+      const playerVisual = select("[data-player-visual]")[0] as HTMLElement;
       const ball = select("[data-hero-ball]")[0];
       const handle = select("[data-handle]")[0];
-      const travel = gsap.timeline({ repeat: -1, yoyo: true, paused: true });
+      const hero = select("[data-hero]")[0] as HTMLElement;
+      const briefcase = select("[data-briefcase]")[0] as HTMLElement;
+      const packCards = select("[data-pack-card]") as HTMLElement[];
+      let heroInView = hero.getBoundingClientRect().bottom > 0;
+      let kickActive = false;
       const travelDistance = () => Math.max(0, host.clientWidth - Math.min(420, host.clientWidth * 0.82) - 40);
-      travel.to(player, { x: travelDistance, duration: 6.5, ease: "sine.inOut" });
-      travel.eventCallback("onRepeat", () => gsap.set(player, { scaleX: travel.reversed() ? -1 : 1 }));
-      travel.play();
-      const juggle = gsap.timeline({ repeat: -1, yoyo: true }).to(ball, { y: -62, rotate: 28, duration: .56, ease: "power2.out" });
-      const bounce = gsap.to(handle, { y: -8, duration: .5, repeat: -1, yoyo: true, ease: "sine.inOut" });
+      const travel = gsap.timeline({ repeat: -1, paused: true })
+        .set(playerVisual, { scaleX: 1 })
+        .to(player, { x: travelDistance, duration: 6.5, ease: "sine.inOut" })
+        .set(playerVisual, { scaleX: -1 })
+        .to(player, { x: 0, duration: 6.5, ease: "sine.inOut" })
+        .set(playerVisual, { scaleX: 1 });
+      const juggle = gsap.timeline({ repeat: -1, yoyo: true, paused: true }).to(ball, { y: -62, rotate: 28, duration: .56, ease: "power2.out" });
+      const bounce = gsap.to(handle, { y: -8, duration: .5, repeat: -1, yoyo: true, ease: "sine.inOut", paused: true });
 
-      const pauseContinuous = () => document.hidden ? (travel.pause(), juggle.pause(), bounce.pause()) : (travel.play(), juggle.play(), bounce.play());
-      document.addEventListener("visibilitychange", pauseContinuous);
-      ScrollTrigger.create({ trigger: select("[data-hero]")[0], start: "top bottom", end: "bottom top", onEnter: pauseContinuous, onLeave: () => { travel.pause(); juggle.pause(); bounce.pause(); }, onEnterBack: () => { travel.play(); juggle.play(); bounce.play(); } });
+      const syncContinuous = () => {
+        const shouldPlay = !document.hidden && heroInView && !kickActive;
+        if (shouldPlay) {
+          travel.play();
+          juggle.play();
+          bounce.play();
+        } else {
+          travel.pause();
+          juggle.pause();
+          bounce.pause();
+        }
+      };
+      document.addEventListener("visibilitychange", syncContinuous);
+      const resizeObserver = new ResizeObserver(() => travel.invalidate());
+      resizeObserver.observe(host);
+      ScrollTrigger.create({
+        trigger: hero,
+        start: "top bottom",
+        end: "bottom top",
+        onEnter: () => { heroInView = true; syncContinuous(); },
+        onLeave: () => { heroInView = false; syncContinuous(); },
+        onEnterBack: () => { heroInView = true; syncContinuous(); },
+        onLeaveBack: () => { heroInView = false; syncContinuous(); },
+      });
+      syncContinuous();
 
-      gsap.timeline({ scrollTrigger: { trigger: select("[data-hero]")[0], start: "45% top", end: "bottom bottom", scrub: true } })
-        .to(travel, { timeScale: .15, duration: .1 }, 0)
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: hero,
+          start: "45% top",
+          end: "bottom bottom",
+          scrub: true,
+          invalidateOnRefresh: true,
+          onEnter: () => { kickActive = true; gsap.set(playerVisual, { scaleX: 1 }); syncContinuous(); },
+          onLeave: () => { kickActive = false; syncContinuous(); },
+          onEnterBack: () => { kickActive = true; gsap.set(playerVisual, { scaleX: 1 }); syncContinuous(); },
+          onLeaveBack: () => { kickActive = false; syncContinuous(); },
+        },
+      })
+        .to(player, { x: () => travelDistance() * .52, duration: .12, ease: "power1.out" }, 0)
         .to(ball, { y: 8, x: 105, rotate: 80, duration: .25, ease: "power1.in" }, 0)
         .to(select("[data-character]")[0], { rotate: -7, x: -12, transformOrigin: "50% 85%", duration: .18 }, .08)
         .to(select("[data-character]")[0], { rotate: 10, x: 18, duration: .18 }, .26)
@@ -70,8 +124,23 @@ export function HomeStory() {
         .to(ball, { x: 210, y: -30, scale: 38, duration: .7, ease: "power3.in", transformOrigin: "center" }, .48)
         .to(select("[data-wipe-label]")[0], { opacity: 1, duration: .15 }, .87);
 
-      gsap.timeline({ scrollTrigger: { trigger: select("[data-pack]")[0], start: "top 70%", end: "bottom 42%", scrub: true } })
-        .to(select("[data-pack-card]"), { x: (i) => (i - 1) * -80, y: (i) => 250 + i * 20, rotate: (i) => i % 2 ? 14 : -12, scale: .24, opacity: .15, stagger: .06 })
+      gsap.timeline({ scrollTrigger: { trigger: select("[data-pack]")[0], start: "top 70%", end: "bottom 42%", scrub: true, invalidateOnRefresh: true } })
+        .to(packCards, {
+          x: (_index: number, target: HTMLElement) => {
+            const card = target.getBoundingClientRect();
+            const destination = briefcase.getBoundingClientRect();
+            return destination.left + destination.width / 2 - (card.left + card.width / 2);
+          },
+          y: (_index: number, target: HTMLElement) => {
+            const card = target.getBoundingClientRect();
+            const destination = briefcase.getBoundingClientRect();
+            return destination.top + destination.height * .64 - (card.top + card.height / 2);
+          },
+          rotate: (index: number) => index % 2 ? 14 : -12,
+          scale: .16,
+          opacity: 0,
+          stagger: .06,
+        })
         .to(select("[data-case-lid]")[0], { rotateX: 0, duration: .25 }, ">-.1")
         .to(select("[data-latch]"), { y: 18, backgroundColor: "#171713", stagger: .08, duration: .18 })
         .fromTo(select("[data-education]")[0], { opacity: .25 }, { opacity: 1, duration: .2 });
@@ -81,7 +150,10 @@ export function HomeStory() {
         .to(select("[data-education-card]"), { rotateY: 180, backgroundColor: "#d5b988", stagger: .08 })
         .fromTo(select("[data-postcard-copy]"), { opacity: 0 }, { opacity: 1, stagger: .08 }, "<.1");
 
-      return () => document.removeEventListener("visibilitychange", pauseContinuous);
+      return () => {
+        document.removeEventListener("visibilitychange", syncContinuous);
+        resizeObserver.disconnect();
+      };
     }, root);
     return () => context.revert();
   }, []);
@@ -90,13 +162,13 @@ export function HomeStory() {
     <section data-hero className={styles.hero}>
       <div className={styles.heroSticky}>
         <div className="shell"><p className="eyebrow">Website builder / brand practitioner / left winger</p><h1 className="display">Ideas in motion.<br/>Systems that land.</h1><p className={styles.intro}>{profile.headline}</p></div>
-        <div className={styles.pitch}><div data-player className={styles.player}><Footballer/><strong data-handle>{profile.handle}</strong></div></div>
+        <div className={styles.pitch}><div data-player className={styles.player}><div data-player-visual className={styles.playerVisual}><Footballer/></div><strong data-handle>{profile.handle}</strong></div></div>
         <p data-wipe-label className={styles.wipeLabel}>The ball opens the work file.</p>
       </div>
     </section>
     <section className={`${styles.work} section`}><div className="shell"><p className="eyebrow">01 / Work in play</p><h2 className="display">A project-led practice.</h2><p className={styles.lead}>Website building, brand systems, content, SEO and practical digital operations across energy, professional services, hospitality and ecommerce.</p><div className={styles.workRows}>{profile.work.map((item) => <article data-work-card key={item.organization}><h3>{item.organization}</h3>{item.role && <p className={styles.role}>{item.role}</p>}<p>{item.summary}</p></article>)}</div><div data-work-card className={styles.github}><span>GitHub field note</span><p>Live contribution totals are not shown without an authenticated source.</p><a className="button" href={profile.social.github} target="_blank" rel="noreferrer">Open GitHub profile</a></div></div></section>
-    <section data-pack className={`${styles.caseScene} section`}><div className="shell"><p className="eyebrow">02 / Pack the work</p><div className={styles.caseFiles}>{profile.capabilities.map((capability) => <span data-pack-card key={capability}>{capability}</span>)}</div><div className={styles.briefcase} aria-label="Work cards enter a briefcase, which closes and locks"><div className={styles.handle}/><div data-case-lid className={styles.caseLid}/><div className={styles.caseBase}><i data-latch/><i data-latch/></div></div></div></section>
-    <section data-education className={`${styles.education} section`}><div className="shell"><p className="eyebrow">03 / Education</p><h2 className="display">Credentials, filed precisely.</h2><div data-transform className={styles.credentials}>{profile.education.map((item) => <article data-education-card key={item.credential}><div className={styles.cardFront}><p>{item.institution}</p><h3>{item.credential}</h3><p>{item.location}</p>{item.start && item.end && <time>{item.start.length === 4 ? `${item.start}-${item.end}` : "2024-2025"}</time>}</div><div data-postcard-copy className={styles.cardBack}><small>Listening postcard</small><h3>Formal study, informal influence.</h3><a href={profile.social.spotify} target="_blank" rel="noreferrer">Open in Spotify</a></div></article>)}</div></div></section>
+    <section data-pack className={`${styles.caseScene} section`}><div className="shell"><p className="eyebrow">02 / Pack the work</p><div className={styles.caseFiles}>{profile.capabilities.map((capability) => <span data-pack-card key={capability}>{capability}</span>)}</div><div data-briefcase className={styles.briefcase} aria-label="Work cards enter a briefcase, which closes and locks"><div className={styles.handle}/><div data-case-lid className={styles.caseLid}/><div className={styles.caseBase}><i data-latch/><i data-latch/></div></div></div></section>
+    <section data-education className={`${styles.education} section`}><div className="shell"><p className="eyebrow">03 / Education</p><h2 className="display">Credentials, filed precisely.</h2><div data-transform className={styles.credentials}>{profile.education.map((item) => <article data-education-card key={item.credential}><div className={styles.cardFront}><p>{item.institution}</p><h3>{item.credential}</h3><p>{item.location}</p>{item.start && item.end ? <time>{educationPeriod(item.start, item.end)}</time> : null}</div><div data-postcard-copy className={styles.cardBack}><small>Listening postcard</small><h3>Formal study, informal influence.</h3><a href={profile.social.spotify} target="_blank" rel="noreferrer">Open in Spotify</a></div></article>)}</div></div></section>
     <section className={`${styles.music} section`}><div className="shell"><p className="eyebrow">04 / Listening room</p><h2 className="display">The postcards have landed.</h2><p>No approved track URIs were supplied. The music route is ready for authorized catalog data and stays useful through Pratham&apos;s verified Spotify profile.</p><a className="button dark" href={profile.social.spotify} target="_blank" rel="noreferrer">Open in Spotify</a></div></section>
   </div>;
 }
