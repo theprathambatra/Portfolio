@@ -1,0 +1,3 @@
+import { integrationPreviews } from "@/lib/integrations";
+import styles from "./ConnectionDesk.module.css";
+export function ConnectionDesk(){return <section className={styles.desk} aria-labelledby="connection-heading"><p className="eyebrow">Supported connections</p><h2 id="connection-heading" className="display">Social desk, with the labels left on.</h2><div>{integrationPreviews.map((item)=><article key={item.kind}><p className={styles.status}>{item.status === "outbound" ? "Outbound preview" : "Authorized data"}</p><h3>{item.label}</h3><p>{item.description}</p><a className="button" href={item.url} target="_blank" rel="noreferrer">Open {item.kind}</a></article>)}</div></section>}

@@ -7,7 +7,7 @@ const sans = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], 
 const display = Newsreader({ subsets: ["latin"], variable: "--font-display" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://theprathambatra.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: { default: "Pratham Batra | Websites, brands and digital systems", template: "%s | Pratham Batra" },
   description: "The portfolio of Pratham Batra, a website builder and multidisciplinary digital creative.",
   openGraph: { title: "Pratham Batra", description: "Websites, brands and practical digital systems built with personality.", type: "website" }

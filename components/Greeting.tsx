@@ -1,6 +1,37 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import greeting from "@/public/assets/greetings.json";
 import styles from "./Greeting.module.css";
-export function Greeting(){const [shown,setShown]=useState(false);const [reduced,setReduced]=useState(true);useEffect(()=>{const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;setReduced(reduce);if(sessionStorage.getItem("greeting-seen")){setShown(true);return}const id=setTimeout(()=>{sessionStorage.setItem("greeting-seen","1");setShown(true)},reduce?250:1700);return()=>clearTimeout(id)},[]);if(shown)return null;return <div className={styles.loader} role="status" aria-label="Hello, Hola, Namaste">{reduced?<img src="/assets/greetings.svg" alt=""/>:<Lottie animationData={greeting} loop/>}<div><span>Hello</span><span>Hola</span><span>Namaste</span></div></div>}
+export function Greeting() {
+  const [shown, setShown] = useState(false);
+  const [reduced, setReduced] = useState(true);
+
+  useEffect(() => {
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setReduced(reduce);
+    if (sessionStorage.getItem("greeting-seen")) {
+      setShown(true);
+      return;
+    }
+    const safety = window.setTimeout(() => {
+      sessionStorage.setItem("greeting-seen", "1");
+      setShown(true);
+    }, reduce ? 500 : 12_000);
+    return () => window.clearTimeout(safety);
+  }, []);
+
+  const complete = () => {
+    sessionStorage.setItem("greeting-seen", "1");
+    setShown(true);
+  };
+
+  if (shown) return null;
+  return <div className={styles.loader} role="status" aria-label="Hello, Hola, Namaste">
+    {reduced
+      ? <Image src="/assets/greetings.svg" width={600} height={600} alt="" onLoad={() => window.setTimeout(complete, 350)} />
+      : <Lottie animationData={greeting} loop={false} onComplete={complete} />}
+    <div><span>Hello</span><span>Hola</span><span>Namaste</span></div>
+  </div>;
+}

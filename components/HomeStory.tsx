@@ -1,24 +1,102 @@
 "use client";
+
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import profile from "@/content/profile.json";
 import styles from "./HomeStory.module.css";
 
-function Footballer(){return <svg className={styles.playerSvg} viewBox="0 0 300 310" role="img" aria-label="Illustrated left winger juggling a football while looking at his phone"><g className={styles.body}><circle cx="154" cy="55" r="30" fill="#b56e43" stroke="currentColor" strokeWidth="5"/><path d="M126 45c6-31 54-34 60 0-17-12-38-13-60 0Z" fill="#171713"/><path d="M117 94 86 177l43 29 59-4 23-99-44-22Z" fill="#f1e9da" stroke="currentColor" strokeWidth="5"/><path d="m137 92 17 51 20-54" fill="none" stroke="#cc861b" strokeWidth="9"/><path d="m124 112-48 20 13 54M190 111l30 45 17-18" fill="none" stroke="currentColor" strokeWidth="16"/><rect x="221" y="119" width="24" height="38" fill="#2455b5" stroke="currentColor" strokeWidth="4"/><path d="m129 204-31 68M174 204l37 68" fill="none" stroke="currentColor" strokeWidth="19"/><path d="m75 277 34-2M199 278l35 1" stroke="currentColor" strokeWidth="13"/></g><g className={styles.ball}><circle cx="54" cy="237" r="24" fill="#f1e9da" stroke="currentColor" strokeWidth="4"/><path d="m54 225 10 7-4 12H47l-4-12Z" fill="#171713"/></g></svg>}
+function Footballer() {
+  return <svg className={styles.playerSvg} viewBox="0 0 420 430" role="img" aria-label="A young left winger juggling a football while checking his phone">
+    <defs>
+      <linearGradient id="jersey" x1="0" x2="1"><stop stopColor="#f8f1e5"/><stop offset="1" stopColor="#d8ccb8"/></linearGradient>
+      <clipPath id="head"><ellipse cx="215" cy="91" rx="48" ry="55"/></clipPath>
+    </defs>
+    <g data-character className={styles.characterBody}>
+      <path d="M177 85c0-46 72-66 91-17 12 31-6 78-47 80-33 1-48-31-44-63Z" fill="#b96f49" stroke="#171713" strokeWidth="6"/>
+      <path d="M169 82c2-55 77-74 101-20-17-14-36-17-55-10-10 4-16 17-28 16l-4 28Z" fill="#171713"/>
+      <path d="M181 92c8-8 14-7 22-2m30-2c8-5 16-3 22 3" fill="none" stroke="#171713" strokeWidth="5" strokeLinecap="round"/>
+      <path d="M207 119c11 7 22 7 31-1" fill="none" stroke="#642f27" strokeWidth="4" strokeLinecap="round"/>
+      <path d="M170 149c31-18 72-18 104 0l31 120-80 31-86-32Z" fill="url(#jersey)" stroke="#171713" strokeWidth="7"/>
+      <path d="m174 157 49 42 48-43M223 198v91" fill="none" stroke="#cc861b" strokeWidth="8"/>
+      <path d="M207 211h32v40h-32z" fill="#2455b5"/><text x="223" y="238" textAnchor="middle" fill="#f1e9da" fontSize="24" fontWeight="700">7</text>
+      <path data-arm-phone d="M276 163c35 16 49 56 57 93" fill="none" stroke="#171713" strokeWidth="25" strokeLinecap="round"/>
+      <path d="M334 254c5 3 9 10 7 17" fill="none" stroke="#b96f49" strokeWidth="22" strokeLinecap="round"/>
+      <g className={styles.phone}><rect x="323" y="219" width="34" height="55" fill="#171713" stroke="#f1e9da" strokeWidth="4"/><circle cx="340" cy="263" r="2" fill="#f1e9da"/></g>
+      <path d="M149 165c-37 28-42 77-31 111" fill="none" stroke="#171713" strokeWidth="25" strokeLinecap="round"/>
+      <path d="M151 276 129 366M270 276l44 88" fill="none" stroke="#171713" strokeWidth="29" strokeLinecap="round"/>
+      <path d="m103 377 44-7m151 6 49-3" stroke="#982e29" strokeWidth="19" strokeLinecap="square"/>
+    </g>
+    <g data-hero-ball className={styles.heroBall}>
+      <circle cx="84" cy="308" r="37" fill="#f1e9da" stroke="#171713" strokeWidth="6"/>
+      <path d="m84 286 17 12-6 20H73l-7-20Zm-17 12-18-5m52 5 18-5m-24 25 9 18m-31-18-10 18" fill="#171713" stroke="#171713" strokeWidth="5"/>
+    </g>
+  </svg>;
+}
 
-export function HomeStory(){const root=useRef<HTMLDivElement>(null);useEffect(()=>{gsap.registerPlugin(ScrollTrigger);if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;const ctx=gsap.context(()=>{
-  gsap.timeline({repeat:-1,yoyo:true,defaults:{ease:"sine.inOut"}}).to("[data-player]",{x:()=>Math.max(0,innerWidth-380),duration:6}).to("[data-player]",{scaleX:-1,duration:.01},">-.01");
-  gsap.to("[data-ball]",{y:-18,duration:.45,repeat:-1,yoyo:true,ease:"power1.out"});
-  gsap.timeline({scrollTrigger:{trigger:"[data-kick]",start:"top 70%",end:"bottom 25%",scrub:true}}).to("[data-kick-ball]",{scale:28,xPercent:45,yPercent:-20,ease:"power2.in"}).to("[data-work]",{opacity:1},"<70%");
-  gsap.timeline({scrollTrigger:{trigger:"[data-case]",start:"top 75%",end:"center 40%",scrub:true}}).from("[data-file]",{x:(i)=>i%2?-160:160,y:-80,rotate:(i)=>i%2?10:-10}).from("[data-latch]",{scaleY:0,transformOrigin:"top"});
-  gsap.from("[data-postcard]",{scrollTrigger:{trigger:"[data-music]",start:"top 80%",end:"center 55%",scrub:true},x:(i)=>[-140,120,-90][i]||0,y:-90,rotate:(i)=>[-8,7,-4][i]||0,opacity:0});
-},root);return()=>ctx.revert()},[]);
-return <div ref={root}>
- <section className={styles.hero}><div className="shell"><p className="eyebrow">Website builder / brand practitioner / left winger</p><h1 className="display">Ideas in motion.<br/>Systems that land.</h1><p className={styles.intro}>{profile.headline}</p></div><div className={styles.pitch}><div data-player className={styles.player}><Footballer/><strong>{profile.handle}</strong></div></div></section>
- <section data-kick className={styles.kick}><div data-kick-ball className={styles.wipeBall} aria-hidden="true"/><div className="shell"><p>Plant. Look up. Make the pass.</p></div></section>
- <section data-work className={`${styles.work} section`}><div className="shell"><p className="eyebrow">01 / Work in play</p><h2 className="display">A project-led practice.</h2><p className={styles.lead}>Website building, brand systems, content, SEO and practical digital operations across energy, professional services, hospitality and ecommerce.</p><div className={styles.workRows}>{profile.work.map(item=><article key={item.organization}><h3>{item.organization}</h3>{item.role&&<p className={styles.role}>{item.role}</p>}<p>{item.summary}</p></article>)}</div><div className={styles.github}><span>GitHub field note</span><p>Live contribution totals are not shown without an authenticated source.</p><a className="button" href={profile.social.github} target="_blank" rel="noreferrer">Open GitHub profile</a></div></div></section>
- <section data-case className={`${styles.caseScene} section`}><div className="shell"><p className="eyebrow">02 / Pack the work</p><div className={styles.caseFiles}>{profile.capabilities.map(x=><span data-file key={x}>{x}</span>)}</div><div className={styles.briefcase} aria-label="An illustrated briefcase closes to complete the work chapter"><div className={styles.handle}/><div className={styles.caseLid}/><div className={styles.caseBase}><i data-latch/><i data-latch/></div></div></div></section>
- <section className={`${styles.education} section`}><div className="shell"><p className="eyebrow">03 / Education</p><h2 className="display">Credentials, filed precisely.</h2><div className={styles.credentials}>{profile.education.map(item=><article key={item.credential}><p>{item.institution}</p><h3>{item.credential}</h3><p>{item.location}</p>{item.start&&item.end&&<time>{item.start.length===4?`${item.start} to ${item.end}`:"September 2024 to May 2025"}</time>}</article>)}</div></div></section>
- <section data-music className={`${styles.music} section`}><div className="shell"><p className="eyebrow">04 / After the lecture</p><h2 className="display">Postcards from the listening room.</h2><div className={styles.postcards}><article data-postcard><small>Side A</small><h3>A catalog, honestly quiet for now.</h3><p>No track URIs were supplied, so this release does not invent a playlist.</p></article><article data-postcard><small>Side B</small><h3>Playback stays with Spotify.</h3><p>Availability and account requirements are controlled by Spotify.</p></article><article data-postcard><small>Destination</small><h3>Pratham's profile</h3><a className="button dark" href={profile.social.spotify} target="_blank" rel="noreferrer">Open in Spotify</a></article></div></div></section>
- </div>}
+export function HomeStory() {
+  const root = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const host = root.current;
+    if (!host) return;
+    const select = gsap.utils.selector(host);
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return;
+
+    const context = gsap.context(() => {
+      const player = select("[data-player]")[0];
+      const ball = select("[data-hero-ball]")[0];
+      const handle = select("[data-handle]")[0];
+      const travel = gsap.timeline({ repeat: -1, yoyo: true, paused: true });
+      const travelDistance = () => Math.max(0, host.clientWidth - Math.min(420, host.clientWidth * 0.82) - 40);
+      travel.to(player, { x: travelDistance, duration: 6.5, ease: "sine.inOut" });
+      travel.eventCallback("onRepeat", () => gsap.set(player, { scaleX: travel.reversed() ? -1 : 1 }));
+      travel.play();
+      const juggle = gsap.timeline({ repeat: -1, yoyo: true }).to(ball, { y: -62, rotate: 28, duration: .56, ease: "power2.out" });
+      const bounce = gsap.to(handle, { y: -8, duration: .5, repeat: -1, yoyo: true, ease: "sine.inOut" });
+
+      const pauseContinuous = () => document.hidden ? (travel.pause(), juggle.pause(), bounce.pause()) : (travel.play(), juggle.play(), bounce.play());
+      document.addEventListener("visibilitychange", pauseContinuous);
+      ScrollTrigger.create({ trigger: select("[data-hero]")[0], start: "top bottom", end: "bottom top", onEnter: pauseContinuous, onLeave: () => { travel.pause(); juggle.pause(); bounce.pause(); }, onEnterBack: () => { travel.play(); juggle.play(); bounce.play(); } });
+
+      gsap.timeline({ scrollTrigger: { trigger: select("[data-hero]")[0], start: "45% top", end: "bottom bottom", scrub: true } })
+        .to(travel, { timeScale: .15, duration: .1 }, 0)
+        .to(ball, { y: 8, x: 105, rotate: 80, duration: .25, ease: "power1.in" }, 0)
+        .to(select("[data-character]")[0], { rotate: -7, x: -12, transformOrigin: "50% 85%", duration: .18 }, .08)
+        .to(select("[data-character]")[0], { rotate: 10, x: 18, duration: .18 }, .26)
+        .to(ball, { x: 150, y: -80, duration: .2, ease: "power2.out" }, .3)
+        .to(ball, { x: 210, y: -30, scale: 38, duration: .7, ease: "power3.in", transformOrigin: "center" }, .48)
+        .to(select("[data-wipe-label]")[0], { opacity: 1, duration: .15 }, .87);
+
+      gsap.timeline({ scrollTrigger: { trigger: select("[data-pack]")[0], start: "top 70%", end: "bottom 42%", scrub: true } })
+        .to(select("[data-pack-card]"), { x: (i) => (i - 1) * -80, y: (i) => 250 + i * 20, rotate: (i) => i % 2 ? 14 : -12, scale: .24, opacity: .15, stagger: .06 })
+        .to(select("[data-case-lid]")[0], { rotateX: 0, duration: .25 }, ">-.1")
+        .to(select("[data-latch]"), { y: 18, backgroundColor: "#171713", stagger: .08, duration: .18 })
+        .fromTo(select("[data-education]")[0], { opacity: .25 }, { opacity: 1, duration: .2 });
+
+      gsap.timeline({ scrollTrigger: { trigger: select("[data-transform]")[0], start: "top 70%", end: "bottom 45%", scrub: true } })
+        .to(select("[data-education-card]"), { x: (i) => [-140, 120, -70][i], y: (i) => [180, 230, 155][i], rotate: (i) => [-8, 7, -5][i], stagger: .08 })
+        .to(select("[data-education-card]"), { rotateY: 180, backgroundColor: "#d5b988", stagger: .08 })
+        .fromTo(select("[data-postcard-copy]"), { opacity: 0 }, { opacity: 1, stagger: .08 }, "<.1");
+
+      return () => document.removeEventListener("visibilitychange", pauseContinuous);
+    }, root);
+    return () => context.revert();
+  }, []);
+
+  return <div ref={root} className={styles.story}>
+    <section data-hero className={styles.hero}>
+      <div className={styles.heroSticky}>
+        <div className="shell"><p className="eyebrow">Website builder / brand practitioner / left winger</p><h1 className="display">Ideas in motion.<br/>Systems that land.</h1><p className={styles.intro}>{profile.headline}</p></div>
+        <div className={styles.pitch}><div data-player className={styles.player}><Footballer/><strong data-handle>{profile.handle}</strong></div></div>
+        <p data-wipe-label className={styles.wipeLabel}>The ball opens the work file.</p>
+      </div>
+    </section>
+    <section className={`${styles.work} section`}><div className="shell"><p className="eyebrow">01 / Work in play</p><h2 className="display">A project-led practice.</h2><p className={styles.lead}>Website building, brand systems, content, SEO and practical digital operations across energy, professional services, hospitality and ecommerce.</p><div className={styles.workRows}>{profile.work.map((item) => <article data-work-card key={item.organization}><h3>{item.organization}</h3>{item.role && <p className={styles.role}>{item.role}</p>}<p>{item.summary}</p></article>)}</div><div data-work-card className={styles.github}><span>GitHub field note</span><p>Live contribution totals are not shown without an authenticated source.</p><a className="button" href={profile.social.github} target="_blank" rel="noreferrer">Open GitHub profile</a></div></div></section>
+    <section data-pack className={`${styles.caseScene} section`}><div className="shell"><p className="eyebrow">02 / Pack the work</p><div className={styles.caseFiles}>{profile.capabilities.map((capability) => <span data-pack-card key={capability}>{capability}</span>)}</div><div className={styles.briefcase} aria-label="Work cards enter a briefcase, which closes and locks"><div className={styles.handle}/><div data-case-lid className={styles.caseLid}/><div className={styles.caseBase}><i data-latch/><i data-latch/></div></div></div></section>
+    <section data-education className={`${styles.education} section`}><div className="shell"><p className="eyebrow">03 / Education</p><h2 className="display">Credentials, filed precisely.</h2><div data-transform className={styles.credentials}>{profile.education.map((item) => <article data-education-card key={item.credential}><div className={styles.cardFront}><p>{item.institution}</p><h3>{item.credential}</h3><p>{item.location}</p>{item.start && item.end && <time>{item.start.length === 4 ? `${item.start}-${item.end}` : "2024-2025"}</time>}</div><div data-postcard-copy className={styles.cardBack}><small>Listening postcard</small><h3>Formal study, informal influence.</h3><a href={profile.social.spotify} target="_blank" rel="noreferrer">Open in Spotify</a></div></article>)}</div></div></section>
+    <section className={`${styles.music} section`}><div className="shell"><p className="eyebrow">04 / Listening room</p><h2 className="display">The postcards have landed.</h2><p>No approved track URIs were supplied. The music route is ready for authorized catalog data and stays useful through Pratham&apos;s verified Spotify profile.</p><a className="button dark" href={profile.social.spotify} target="_blank" rel="noreferrer">Open in Spotify</a></div></section>
+  </div>;
+}

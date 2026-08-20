@@ -1,5 +1,7 @@
 # Build status
 
+> The correction pass is implemented. The release gate remains externally blocked because this environment returns HTTP 403 for npm registry requests, so project dependencies cannot be installed. No rule or check has been disabled.
+
 ## Build plan
 
 - [x] Phase 0: audit source material, establish the application shell and visual system.
@@ -29,8 +31,12 @@
 
 - `node` structured-content check: passed. All JSON parsed and exactly 18 approved sites were found.
 - Secret-pattern scan and `git diff --check`: passed.
-- `npm install`: blocked by the execution environment's HTTP 403 response from the npm registry. No dependency lockfile could be produced.
-- `npm run type-check`, `npm run lint`, `npm test`, `npm run test:e2e` and `npm run build`: attempted, but blocked because dependencies could not be installed. The global TypeScript and ESLint installations consequently reported missing project modules; Vitest, Playwright and Next were unavailable.
+- `npm install`: blocked by the execution environment's HTTP 403 response from the npm registry. A version 3 root dependency lock manifest is committed, but it must be hydrated by `npm install` in a network-enabled environment before `npm ci` is used.
+- `npm run type-check`: attempted and failed because Next, React and Node project type declarations could not be installed. A separate no-resolution TypeScript syntax pass reported no parser errors.
+- `npm run lint`: attempted and failed because the project ESLint 8 and Next configuration could not be installed; the unrelated global ESLint 10 installation cannot consume the repository's ESLint 8 configuration.
+- `npm test`: attempted and failed because Vitest could not be installed. `vitest.config.ts` now limits unit discovery to `*.test.ts(x)` and explicitly excludes `tests/`, where Playwright lives.
+- `npm run build`: attempted and failed because Next.js could not be installed.
+- `npm run test:e2e`: remains separately configured for Playwright and could not run because Playwright could not be installed.
 - The 360, 430, 768, 1024 and 1440 Playwright matrix is committed in `tests/smoke.spec.ts`, but could not execute for the same registry restriction.
 - A visual screenshot could not be captured because the application could not start without the blocked Next.js installation.
 
@@ -42,3 +48,10 @@
 4. Import the repository in Vercel using the Next.js preset. The application deploys without optional integration variables and displays truthful fallbacks.
 5. Add only the desired variables listed in `.env.example` to Vercel. Never expose Spotify, GitHub, Instagram or LinkedIn secrets as `NEXT_PUBLIC_*` values.
 6. After the production URL exists, register authorized OAuth redirect URLs with each enabled provider, supply a public Cal.com or Topmate URL if booking is desired, and repeat the responsive smoke suite against production.
+
+## Spotify OAuth activation
+
+1. Create a Spotify application in the Spotify developer dashboard and register its exact server-side OAuth redirect URL.
+2. Authorize the application for the library scope required by the chosen catalog source and exchange the authorization code server-side for a refresh token.
+3. Add `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET` and `SPOTIFY_REFRESH_TOKEN` only to Vercel environment variables.
+4. Redeploy and verify that `/api/music` reports `source: "spotify"`. The credential-free response remains explicitly labelled `curated` and contains no invented songs.
