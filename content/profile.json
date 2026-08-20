@@ -1,0 +1,145 @@
+{
+  "name": "Pratham Batra",
+  "handle": "@theprathambatra",
+  "email": "prathambatra68@gmail.com",
+  "phoneDisplay": "+91 93100 09800",
+  "phoneE164": "+919310009800",
+  "whatsappUrl": "https://wa.me/919310009800",
+  "headline": "Websites, brands and practical digital systems built with personality.",
+  "perspective": {
+    "intro": "The work sits where websites, visual storytelling and practical business operations meet.",
+    "background": "Retail merchandising at TJX Companies in Toronto sharpened Pratham's eye for visual hierarchy and customer attention. Work with Swawlambi Renewables grounds that creative instinct in real operating systems.",
+    "verification": "The experience and positioning are supplied in Pratham's portfolio PDF and prior direct context. No title or date range is asserted here."
+  },
+  "capabilities": [
+    "Website design and development",
+    "Brand building",
+    "Digital and content marketing",
+    "Public relations",
+    "SEO and search strategy",
+    "Business systems and applied AI"
+  ],
+  "afterHours": [
+    {
+      "label": "Football",
+      "title": "Left wing",
+      "detail": "Real Madrid supporter. Preferred position: left winger."
+    },
+    {
+      "label": "Hiking",
+      "title": "Mountain trails",
+      "detail": "Time outdoors, especially on mountain trails."
+    },
+    {
+      "label": "Writing",
+      "title": "Notebook open",
+      "detail": "Writing remains part of the creative practice beyond client work."
+    },
+    {
+      "label": "Content creation",
+      "title": "Frame by frame",
+      "detail": "Photography, video and visual storytelling outside formal projects."
+    }
+  ],
+  "social": {
+    "github": "https://github.com/theprathambatra",
+    "instagram": "https://www.instagram.com/theprathambatra/",
+    "linkedin": "https://www.linkedin.com/in/theprathambatra/",
+    "spotify": "https://open.spotify.com/user/31hfojbpw2eu4xhwikesijhylapm"
+  },
+  "football": {
+    "club": "Real Madrid",
+    "position": "Left winger"
+  },
+  "education": [
+    {
+      "institution": "York University, School of Continuing Studies",
+      "credential": "Post-Graduate Certificate in Public Relations",
+      "location": "Toronto, Canada",
+      "start": "2023",
+      "end": "2024",
+      "verification": "Confirmed directly by Pratham Batra. The uploaded file labelled Public Relations was a duplicate of the Digital and Content Marketing completion letter."
+    },
+    {
+      "institution": "York University, School of Continuing Studies",
+      "credential": "Post-Graduate Certificate in Digital and Content Marketing",
+      "location": "Toronto, Canada",
+      "start": "2024-09-05",
+      "end": "2025-05-06",
+      "verification": "Confirmed by the supplied York University completion letter. Private identifiers from the source are intentionally excluded."
+    },
+    {
+      "institution": "Maharaja Agrasen Institute of Management Studies",
+      "credential": "Bachelor of Journalism and Mass Communication",
+      "location": "Delhi, India",
+      "start": null,
+      "end": null,
+      "verification": "Confirmed directly by Pratham Batra. Dates are not yet supplied and must not be invented."
+    }
+  ],
+  "credentials": [
+    {
+      "name": "PTE Core",
+      "issuer": "Pearson",
+      "score": "Overall 90",
+      "date": "2025-05-01",
+      "visibility": "optional",
+      "privateSourceCommitted": false
+    }
+  ],
+  "licensesAndCertifications": [],
+  "work": [
+    {
+      "organization": "Swawlambi Renewables Pvt. Ltd. and Swawlambi Inc.",
+      "role": null,
+      "dates": null,
+      "summary": "Work spanning solar, HVAC, power backup, energy audits, electrical and fire safety audits, business development and digital presence.",
+      "verification": "Organization and scope confirmed directly. Exact title and dates are not supplied, so the UI must not invent them."
+    },
+    {
+      "organization": "Independent website and brand work",
+      "role": "Website builder and digital creative",
+      "dates": null,
+      "summary": "A growing body of website, brand, content, SEO and applied AI work across professional services, hospitality, ecommerce, food, fashion, health and energy.",
+      "verification": "Use the approved website list as project evidence. Do not invent client results."
+    }
+  ],
+  "swawlambi": {
+    "legalName": "Swawlambi Renewables Pvt. Ltd.",
+    "operatingName": "Swawlambi Inc.",
+    "website": "https://swawlambiinc.in",
+    "tagline": "Where power meets purpose.",
+    "address": "219, Syndicate House, Inderlok, Delhi, India",
+    "map": {
+      "latitude": 28.6690016,
+      "longitude": 77.1686023,
+      "shortUrl": "https://maps.app.goo.gl/2UL1dsmi9Pju24PJ6"
+    },
+    "services": [
+      "Solar energy solutions",
+      "HVAC solutions",
+      "Power backup solutions",
+      "Energy audit services",
+      "Electrical and fire safety audit services"
+    ],
+    "companyReportedClaims": [
+      {
+        "label": "Projects completed",
+        "value": "42,000+",
+        "verified": false,
+        "requiredDisclosure": "Company-reported figure. Not independently verified."
+      },
+      {
+        "label": "Clients onboarded",
+        "value": "21,000+",
+        "verified": false,
+        "requiredDisclosure": "Company-reported figure. Not independently verified."
+      }
+    ]
+  },
+  "booking": {
+    "provider": "cal.com-or-topmate",
+    "url": null,
+    "fallback": "Use email and WhatsApp until a public booking URL is supplied."
+  }
+}

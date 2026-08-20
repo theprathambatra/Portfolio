@@ -1,0 +1,24 @@
+{
+  "displayName": "Work Orbit",
+  "capturePolicy": "Capture a current static preview during development. Do not load all sites in live iframes. Do not state performance results unless separately verified.",
+  "sites": [
+    { "id": "cake-vanity", "name": "The Cake Vanity", "url": "https://thecakevanity.in/", "category": "Food and ecommerce", "verifiedResult": null },
+    { "id": "prints-pink-city", "name": "Prints of Pink City", "url": "https://printsofpinkcity.com/", "category": "Fashion and ecommerce", "verifiedResult": null },
+    { "id": "keystone-global", "name": "Keystone Global Group", "url": "https://keystoneglobalgroup.com/", "category": "Professional services", "verifiedResult": null },
+    { "id": "arbivis", "name": "Arbivis Partners LLP", "url": "https://arbivispartnersllp.com", "category": "Legal services", "verifiedResult": null },
+    { "id": "privacytru", "name": "PrivacyTru", "url": "https://privacytru.com", "category": "Privacy and compliance", "verifiedResult": null },
+    { "id": "dalcia", "name": "Dalcia", "url": "https://dalcia.in", "category": "Automotive", "verifiedResult": null },
+    { "id": "gully-kitchen", "name": "The Gully Kitchen", "url": "https://thegullykitchen.com/", "category": "Food and hospitality", "verifiedResult": null },
+    { "id": "graceline", "name": "Graceline Hospitality Advisors", "url": "https://gracelinehospitality.com/", "category": "Hospitality consulting", "verifiedResult": null },
+    { "id": "verdienta", "name": "Verdienta", "url": "https://verdienta.com", "category": "Legal services", "verifiedResult": null },
+    { "id": "swawlambi", "name": "Swawlambi Inc.", "url": "https://swawlambiinc.in", "category": "Energy, HVAC and power", "verifiedResult": null },
+    { "id": "footprint-story", "name": "Footprint Story", "url": "https://footprintstory.in", "category": "Sustainability and storytelling", "verifiedResult": null },
+    { "id": "hashtagg", "name": "Hashtagg", "url": "https://hashtagg.in", "category": "Fashion and ecommerce", "verifiedResult": null },
+    { "id": "renutrimass", "name": "Renutrimass", "url": "https://renutrimass.com/", "category": "Nutrition and wellness", "verifiedResult": null },
+    { "id": "josh-india", "name": "Josh India", "url": "https://www.joshindia.com/", "category": "Ecommerce", "verifiedResult": null },
+    { "id": "aurament", "name": "Aurament", "url": "https://aurament.com/", "category": "Jewellery and ecommerce", "verifiedResult": null },
+    { "id": "sephani", "name": "Sephani", "url": "https://www.sephani.co.in/", "category": "Fashion and ecommerce", "verifiedResult": null },
+    { "id": "vedaprint", "name": "Vedaprint", "url": "https://vedaprint.com/", "category": "Print and ecommerce", "verifiedResult": null },
+    { "id": "whattacart", "name": "WhattaCart", "url": "https://whattacart.com/", "category": "Ecommerce", "verifiedResult": null }
+  ]
+}

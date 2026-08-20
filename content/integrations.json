@@ -1,0 +1,44 @@
+{
+  "github": {
+    "profileUrl": "https://github.com/theprathambatra",
+    "username": "theprathambatra",
+    "mode": "server-api-with-static-fallback",
+    "verifiedLiveData": false,
+    "fallback": "Show the profile link and locally stored project list. Do not fabricate contribution counts."
+  },
+  "instagram": {
+    "profileUrl": "https://www.instagram.com/theprathambatra/",
+    "username": "theprathambatra",
+    "mode": "authorized-api-or-curated-embeds",
+    "verifiedLiveData": false,
+    "fallback": "Show a profile callout and curated post records only after their URLs are supplied. Do not scrape the profile."
+  },
+  "spotify": {
+    "profileUrl": "https://open.spotify.com/user/31hfojbpw2eu4xhwikesijhylapm",
+    "userId": "31hfojbpw2eu4xhwikesijhylapm",
+    "mode": "spotify-embeds-plus-authorized-web-api",
+    "targetCatalogCapacity": 5000,
+    "verifiedLiveData": false,
+    "fallback": "Show the Spotify profile and configured track or playlist URIs. Do not claim free full playback."
+  },
+  "linkedin": {
+    "profileUrl": "https://www.linkedin.com/in/theprathambatra/",
+    "vanityName": "theprathambatra",
+    "mode": "approved-oauth-or-curated-cards",
+    "verifiedLiveData": false,
+    "fallback": "Show the profile link and manually approved cards. Do not scrape or invent posts, jobs or certificates."
+  },
+  "maps": {
+    "label": "Swawlambi Inc.",
+    "address": "219, Syndicate House, Inderlok, Delhi, India",
+    "latitude": 28.6690016,
+    "longitude": 77.1686023,
+    "embedUrl": "https://www.google.com/maps?q=28.6690016,77.1686023&z=17&output=embed"
+  },
+  "booking": {
+    "provider": null,
+    "publicUrl": null,
+    "fallbackEmail": "mailto:prathambatra68@gmail.com",
+    "fallbackWhatsapp": "https://wa.me/919310009800"
+  }
+}

@@ -1,0 +1,2 @@
+import Link from "next/link";
+export function Footer(){return <footer className="siteFooter"><div><p className="eyebrow">The final whistle is an invitation</p><p>For websites, collaborations or a practical conversation, write to <a href="mailto:prathambatra68@gmail.com">prathambatra68@gmail.com</a>.</p></div><nav aria-label="Footer"><Link href="/work">Work Orbit</Link><Link href="/music">Music Vault</Link><Link href="/contact">Contact</Link></nav></footer>}
