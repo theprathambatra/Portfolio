@@ -40,6 +40,13 @@ test("home exposes supported social connections without invented activity", asyn
   await expect(page.getByRole("link", { name: "Open linkedin" })).toBeVisible();
 });
 
+test("pdf-backed perspective stays inside the home narrative", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByText(/Retail merchandising at TJX Companies/)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "What keeps the work human." })).toBeVisible();
+  await expect(page.locator("[data-after-hours] [data-after-note]")).toHaveCount(4);
+});
+
 test("music reports its integration status and remains useful without credentials", async ({ page }) => {
   await page.goto("/music");
   await expect(page.getByText(/Integration status:/)).toBeVisible();

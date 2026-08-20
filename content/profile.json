@@ -6,6 +6,11 @@
   "phoneE164": "+919310009800",
   "whatsappUrl": "https://wa.me/919310009800",
   "headline": "Websites, brands and practical digital systems built with personality.",
+  "perspective": {
+    "intro": "The work sits where websites, visual storytelling and practical business operations meet.",
+    "background": "Retail merchandising at TJX Companies in Toronto sharpened Pratham's eye for visual hierarchy and customer attention. Work with Swawlambi Renewables grounds that creative instinct in real operating systems.",
+    "verification": "The experience and positioning are supplied in Pratham's portfolio PDF and prior direct context. No title or date range is asserted here."
+  },
   "capabilities": [
     "Website design and development",
     "Brand building",
@@ -13,6 +18,28 @@
     "Public relations",
     "SEO and search strategy",
     "Business systems and applied AI"
+  ],
+  "afterHours": [
+    {
+      "label": "Football",
+      "title": "Left wing",
+      "detail": "Real Madrid supporter. Preferred position: left winger."
+    },
+    {
+      "label": "Hiking",
+      "title": "Mountain trails",
+      "detail": "Time outdoors, especially on mountain trails."
+    },
+    {
+      "label": "Writing",
+      "title": "Notebook open",
+      "detail": "Writing remains part of the creative practice beyond client work."
+    },
+    {
+      "label": "Content creation",
+      "title": "Frame by frame",
+      "detail": "Photography, video and visual storytelling outside formal projects."
+    }
   ],
   "social": {
     "github": "https://github.com/theprathambatra",

@@ -24,6 +24,10 @@
 
 ## Source decisions
 
+- The newly supplied `Pratham's Portfolio.pdf` is treated as a candidate content source, not a replacement design system. Its strongest material is the positioning at the intersection of website building, visual storytelling, retail merchandising and practical business operations.
+- The PDF-backed Toronto retail merchandising experience at TJX Companies is included without importing an unverified job title or date range. The home page also gains a compact `After the whistle` editorial strip for the supplied football, hiking, writing and content-creation interests.
+- The PDF's complete employment list, chronology, `Taking Risks` manifesto and `Doing odd jobs` entry are excluded. Several roles and dates conflict with or exceed the verified structured record, and the personal material must support rather than overtake the professional story.
+- The PDF's Canva layout, purple styling and embedded photographs are not imported. The accepted ideas are expressed through the existing match-day editorial system and motion language so the addition remains part of the same experience and does not bloat the public bundle.
 - The purple BYOB styling and every performance, ROI, ranking, tenure and client claim in the reference pages are excluded. The references are used only as historical evidence of website work.
 - The supplied contact photograph and Swawlambi logo are used unchanged. The footballer is an original inline SVG illustration, not a cutout of the photograph.
 - No Spotify track URIs were supplied. The credential-free fallback therefore links to Pratham's Spotify profile and explains that no playable selection is configured, rather than inventing favorite tracks.

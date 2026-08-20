@@ -150,6 +150,17 @@ export function HomeStory() {
         .to(select("[data-education-card]"), { rotateY: 180, backgroundColor: "#d5b988", stagger: .08 })
         .fromTo(select("[data-postcard-copy]"), { opacity: 0 }, { opacity: 1, stagger: .08 }, "<.1");
 
+      gsap.timeline({ scrollTrigger: { trigger: select("[data-after-hours]")[0], start: "top 78%", end: "center 48%", scrub: .7 } })
+        .fromTo(select("[data-after-rule]")[0], { scaleX: 0 }, { scaleX: 1, transformOrigin: "left center", duration: .5 })
+        .from(select("[data-after-note]"), {
+          x: (index) => index % 2 ? 42 : -42,
+          y: (index) => index % 2 ? 34 : 68,
+          rotate: (index) => index % 2 ? 2 : -2,
+          opacity: .12,
+          stagger: .08,
+          duration: .55,
+        }, 0);
+
       return () => {
         document.removeEventListener("visibilitychange", syncContinuous);
         resizeObserver.disconnect();
@@ -166,9 +177,10 @@ export function HomeStory() {
         <p data-wipe-label className={styles.wipeLabel}>The ball opens the work file.</p>
       </div>
     </section>
-    <section className={`${styles.work} section`}><div className="shell"><p className="eyebrow">01 / Work in play</p><h2 className="display">A project-led practice.</h2><p className={styles.lead}>Website building, brand systems, content, SEO and practical digital operations across energy, professional services, hospitality and ecommerce.</p><div className={styles.workRows}>{profile.work.map((item) => <article data-work-card key={item.organization}><h3>{item.organization}</h3>{item.role && <p className={styles.role}>{item.role}</p>}<p>{item.summary}</p></article>)}</div><div data-work-card className={styles.github}><span>GitHub field note</span><p>Live contribution totals are not shown without an authenticated source.</p><a className="button" href={profile.social.github} target="_blank" rel="noreferrer">Open GitHub profile</a></div></div></section>
+    <section className={`${styles.work} section`}><div className="shell"><p className="eyebrow">01 / Work in play</p><h2 className="display">A project-led practice.</h2><p className={styles.lead}>{profile.perspective.intro}</p><p className={styles.perspective}>{profile.perspective.background}</p><div className={styles.workRows}>{profile.work.map((item) => <article data-work-card key={item.organization}><h3>{item.organization}</h3>{item.role && <p className={styles.role}>{item.role}</p>}<p>{item.summary}</p></article>)}</div><div data-work-card className={styles.github}><span>GitHub field note</span><p>Live contribution totals are not shown without an authenticated source.</p><a className="button" href={profile.social.github} target="_blank" rel="noreferrer">Open GitHub profile</a></div></div></section>
     <section data-pack className={`${styles.caseScene} section`}><div className="shell"><p className="eyebrow">02 / Pack the work</p><div className={styles.caseFiles}>{profile.capabilities.map((capability) => <span data-pack-card key={capability}>{capability}</span>)}</div><div data-briefcase className={styles.briefcase} aria-label="Work cards enter a briefcase, which closes and locks"><div className={styles.handle}/><div data-case-lid className={styles.caseLid}/><div className={styles.caseBase}><i data-latch/><i data-latch/></div></div></div></section>
     <section data-education className={`${styles.education} section`}><div className="shell"><p className="eyebrow">03 / Education</p><h2 className="display">Credentials, filed precisely.</h2><div data-transform className={styles.credentials}>{profile.education.map((item) => <article data-education-card key={item.credential}><div className={styles.cardFront}><p>{item.institution}</p><h3>{item.credential}</h3><p>{item.location}</p>{item.start && item.end ? <time>{educationPeriod(item.start, item.end)}</time> : null}</div><div data-postcard-copy className={styles.cardBack}><small>Listening postcard</small><h3>Formal study, informal influence.</h3><a href={profile.social.spotify} target="_blank" rel="noreferrer">Open in Spotify</a></div></article>)}</div></div></section>
     <section className={`${styles.music} section`}><div className="shell"><p className="eyebrow">04 / Listening room</p><h2 className="display">The postcards have landed.</h2><p>No approved track URIs were supplied. The music route is ready for authorized catalog data and stays useful through Pratham&apos;s verified Spotify profile.</p><a className="button dark" href={profile.social.spotify} target="_blank" rel="noreferrer">Open in Spotify</a></div></section>
+    <section data-after-hours className={`${styles.afterHours} section`}><div className="shell"><div className={styles.afterHeader}><div><p className="eyebrow">05 / After the whistle</p><h2 className="display">What keeps the work human.</h2></div><p>Four interests that keep the practice observant, active and personal.</p></div><div data-after-rule className={styles.afterRule}/><div className={styles.afterTrack} aria-label="Interests beyond work">{profile.afterHours.map((item, index) => <article data-after-note key={item.label}><span>{String(index + 1).padStart(2, "0")} / {item.label}</span><h3>{item.title}</h3><p>{item.detail}</p></article>)}</div></div></section>
   </div>;
 }
