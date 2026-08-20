@@ -35,7 +35,7 @@ test("work orbit exposes the spherical index and four verified service postcards
 
 test("home exposes supported social connections without invented activity", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Contribution activity" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Contribution activity", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Open instagram" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Open linkedin" })).toBeVisible();
 });
@@ -50,7 +50,7 @@ test("direct contact actions are reachable", async ({ page }) => {
   await page.goto("/contact");
   await expect(page.getByRole("link", { name: /WhatsApp \+91/ })).toBeVisible();
   await expect(page.getByRole("link", { name: /Call \+91/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: "prathambatra68@gmail.com" })).toBeVisible();
+  await expect(page.locator("#main").getByRole("link", { name: "prathambatra68@gmail.com" })).toBeVisible();
 });
 
 test("reduced motion keeps semantic home and work content", async ({ page }) => {

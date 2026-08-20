@@ -49,7 +49,7 @@
 - Runtime route check: `/`, `/work`, `/music`, `/contact`, `/api/music` and `/api/integrations` each returned HTTP 200 from the production server.
 - Credential-free API behavior: Music returned an empty, labelled curated fallback; GitHub returned a labelled fallback with no invented contribution count.
 - Static release checks: all source JSON parsed, exactly 18 approved website records were present, `git diff --check` passed and no committed secret pattern was found.
-- Local browser smoke: the Playwright package is installed, but the Chromium archive could not be downloaded from the browser CDN in this environment. The committed GitHub Actions browser job installs Chromium and runs the 360, 430, 768, 1024 and 1440 matrix after the branch is pushed.
+- Local browser smoke: the Playwright package is installed, but the Chromium archive could not be downloaded from the browser CDN in this environment. The committed GitHub Actions browser job installs Chromium and owns the 360, 430, 768, 1024 and 1440 release matrix.
 
 ## Vercel handoff
 
